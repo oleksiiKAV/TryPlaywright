@@ -1,0 +1,16 @@
+{
+  "name": "rozetka_tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tests:e2e": "playwright test --config=e2e.config.ts --project=Chromium"
+  },
+  
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@playwright/test": "^1.29.2"
+  }
+}
