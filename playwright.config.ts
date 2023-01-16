@@ -6,7 +6,7 @@ const config: PlaywrightTestConfig = {
     use : {
         headless : true,
         viewport : {width:1200, height: 720},
-        actionTimeout : 3000,
+        actionTimeout : 5000,
         ignoreHTTPSErrors : true,
         video : 'off',
         screenshot: 'only-on-failure',

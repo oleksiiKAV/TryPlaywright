@@ -3,7 +3,7 @@
 import {test, expect} from  '@playwright/test'
 import {HomePage} from '../page-objects/HomePage'
 //let page
-test.describe.parallel.only("Try testing", () => {
+test.describe.parallel("Try testing", () => {
 let homePage: HomePage
 test.beforeEach( async({page})=>
 {
@@ -16,26 +16,39 @@ test.beforeEach( async({page})=>
 })
 
 test('Rozetka Playwrihgt test', async ()=>{
-        
-    await homePage.typeInSearchField(" dfgdfgfgfd ")//iPhone 14
-      
-    //await expect(homePage.searchField).toBeEmpty()
+    
+
+    // const userName = page.locator('#username');
+    // const cardTitles = page.locator(".card-body a");
+    await homePage.typeInSearchField("iPhone 14")
+    
+    //await page.keyboard.press('Enter')
+    //await page.pause();
+    
+  
+    await expect(homePage.searchField).toBeEmpty()
     
     //const searchResult = await page.locator('.goods-tile__inner');
-    // const searchResult = await homePage.page.locator('.goods-tile__heading');
-    const productText = " asdfdf "//"MQ293RX/A" // will be read from a test data file
-    // console.log("23423423  " + await searchResult.count());
-    if (await homePage.assertSearchProducts() === true){
-        const res=await homePage.findByEnteredText(productText)
-        if (res === true){
-            const h1Header = await homePage.page.locator('.product__title')
-            await expect(h1Header).toBeVisible()
-            await expect(h1Header).toContainText(productText)
-        }
-        else console.log("Product does'not find in the searching list")
-    }
-    else console.log("Product does'not find in Rosetka")
+    const searchResult = await homePage.page.locator('.goods-tile__heading');
     
+    console.log("23423423  " + await searchResult.count());
+
+    for (let i=0; i<await searchResult.count(); ++i){
+        const name = await searchResult.nth(i).locator('.goods-tile__title').textContent();
+        console.log(name);
+        if (name!.includes("MQ293RX/A")){ 
+            //The non-null assertion operator (!.), also called the exclamation mark operator, 
+            //indicates to the compiler that we are sure that the value we want to access is not null or undefined
+            await searchResult.nth(i).click();
+            break;
+        }
+    }
+    //await page.pause();
+    const h1Header = await homePage.page.locator('.product__title')
+    await expect(h1Header).toBeVisible()
+    await expect(h1Header).toContainText("MQ293RX/A")
+    
+
 });
 })
 
