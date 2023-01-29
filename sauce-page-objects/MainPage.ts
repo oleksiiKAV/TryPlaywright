@@ -7,6 +7,7 @@ export class MainPage {
   readonly productsList: Locator
   readonly productsNames: Locator
   readonly itemName: Locator
+  readonly cartBtn: Locator
   readonly cartCount: Locator
   arrNames: Array<string>
 
@@ -16,7 +17,8 @@ export class MainPage {
     this.productsList = page.locator(".inventory_item")
     this.productsNames= page.locator(".inventory_item .inventory_item_name")// Names of products
     this.itemName = page.locator('.inventory_item_name')// item name
-    this.cartCount = page.locator('.shopping_cart_badge')
+    this.cartBtn = page.locator('#shopping_cart_container') // cart btn
+    this.cartCount = page.locator('.shopping_cart_badge') // items in the cart
     
   }
   // products are shown
