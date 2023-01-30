@@ -23,19 +23,21 @@ test.describe("Sauce item page", () => {
         await startPage.login('standard_user','secret_sauce')  
         await mainPage.assertProductsList()
         //await mainPage.addToCartFromList('Sauce Labs Bolt T-Shirt')
-        await mainPage.itemClick(2)
+        //await mainPage.itemClick(2)
+        await mainPage.itemClickFromList('Sauce Labs Bolt T-Shirt')
         await itemPage.wait(3000)
         //await page.pause()
-        await itemPage.assertItemInfo()
+        await itemPage.assertItemInfo('Sauce Labs Bolt T-Shirt')
 
         //const titles= await page.locator(".inventory_item .inventory_item_name").allTextContents();
     })
-    // When I sign in as a registered user I want to be able to add a product from the products list to the cart
-    test('Add to cart', async ({page})=>{
+    // When I sign in as a registered user I want to be able to add a product from the item page to the cart
+    test('Add to cart from item page', async ({page})=>{
         await startPage.login('standard_user','secret_sauce')  
         await mainPage.assertProductsList()
-        await mainPage.addToCartFromList('Sauce Labs Bolt T-Shirt')
-        await mainPage.addToCartFromList('Sauce Labs Backpack')
+        await mainPage.itemClickFromList('Sauce Labs Backpack')
+        await itemPage.wait(3000)
+        
         console.log('cart count is:' + await mainPage.getCartCount())
         expect(await mainPage.getCartCount()).toBeGreaterThan(0)
     })

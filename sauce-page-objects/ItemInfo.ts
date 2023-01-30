@@ -23,14 +23,14 @@ export class ItemInfo {
     this.itemImage = page.locator("div[class='iinventory_details_img_container']")// item image
     this.itemPrice = page.locator('.inventory_details_price')// item price
     this.itemDescription = page.locator('.inventory_details_desc')// item description
-    this.cartBtn = page.locator('..btn_inventory') // cart btn
+    this.cartBtn = page.locator('.btn_inventory') // cart btn
     this.cartCount = page.locator('.shopping_cart_badge') // items in the cart
     
   }
   // item info is shown
-  async assertItemInfo() {
+  async assertItemInfo(name: string) {
     await expect(this.itemName).toBeVisible()
-    //await expect(this.itemImage).toBeVisible()
+    await expect(await this.page.locator("img[alt='"+name+"']")).toBeVisible()
     await expect(this.itemPrice).toBeVisible()
     await expect(this.itemDescription).toBeVisible()
   }

@@ -31,6 +31,17 @@ export class MainPage {
  async itemClick(item) {
   await this.productsList.nth(item).locator('.inventory_item_name').click()
  }
+ async itemClickFromList(productName: string) {
+  this.arrNames = await this.productsNames.allTextContents()
+  for (let i=0; i < await this.productsNames.count(); ++i){
+    if(this.arrNames[i] === productName)
+        {
+            await this.productsList.nth(i).locator('.inventory_item_name').click()
+            break
+        }
+        
+  }
+}
 
   // products are shown
   async assertProductsList() {
