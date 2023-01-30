@@ -3,24 +3,30 @@
 import {test, expect} from  '@playwright/test'
 import {StartPage} from '../../sauce-page-objects/StartPage'
 import {MainPage} from '../../sauce-page-objects/MainPage'
+import {ItemInfo} from '../../sauce-page-objects/ItemInfo'
 //let page
-test.describe("Sauce start page", () => {
+test.describe("Sauce item page", () => {
     let startPage: StartPage
     let mainPage: MainPage
+    let itemPage: ItemInfo
 
     test.beforeEach( async({page})=>
     {
         startPage = new StartPage(page)
         mainPage = new MainPage(page)
+        itemPage = new ItemInfo(page)
         await startPage.visit()
     })
 
-    // When I sign in as a registered user I want to be able to view the products list with products details
-    test('Login as a registered user and assert items info', async ({page})=>{
+    // When I sign in as a registered user I want to be able to open products details 
+    test.only('Get item info', async ({page})=>{
         await startPage.login('standard_user','secret_sauce')  
         await mainPage.assertProductsList()
+        //await mainPage.addToCartFromList('Sauce Labs Bolt T-Shirt')
+        await mainPage.itemClick(2)
+        await itemPage.wait(3000)
         //await page.pause()
-        await mainPage.assertItemInfo()
+        await itemPage.assertItemInfo()
 
         //const titles= await page.locator(".inventory_item .inventory_item_name").allTextContents();
     })
