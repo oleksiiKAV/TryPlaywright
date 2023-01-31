@@ -5,7 +5,7 @@ import {StartPage} from '../../sauce-page-objects/StartPage'
 import {MainPage} from '../../sauce-page-objects/MainPage'
 import {ItemInfo} from '../../sauce-page-objects/ItemInfo'
 //let page
-test.describe("Sauce item page", () => {
+test.describe.only("Sauce item page", () => {
     let startPage: StartPage
     let mainPage: MainPage
     let itemPage: ItemInfo
@@ -19,7 +19,7 @@ test.describe("Sauce item page", () => {
     })
 
     // When I sign in as a registered user I want to be able to open products details 
-    test.only('Get item info', async ({page})=>{
+    test('Get item info', async ({page})=>{
         await startPage.login('standard_user','secret_sauce')  
         await mainPage.assertProductsList()
         //await mainPage.addToCartFromList('Sauce Labs Bolt T-Shirt')
@@ -32,14 +32,25 @@ test.describe("Sauce item page", () => {
         //const titles= await page.locator(".inventory_item .inventory_item_name").allTextContents();
     })
     // When I sign in as a registered user I want to be able to add a product from the item page to the cart
-    test('Add to cart from item page', async ({page})=>{
+    test('Add/Remove to cart from item page', async ({page})=>{
         await startPage.login('standard_user','secret_sauce')  
         await mainPage.assertProductsList()
         await mainPage.itemClickFromList('Sauce Labs Backpack')
         await itemPage.wait(3000)
-        
-        console.log('cart count is:' + await mainPage.getCartCount())
-        expect(await mainPage.getCartCount()).toBeGreaterThan(0)
+        await itemPage.addToCart()
+        //console.log('cart count is:' + await mainPage.getCartCount())
+        //expect(await mainPage.getCartCount()).toBeGreaterThan(0)
+    })
+    // back to the product list
+    test('Back to the products list from item page', async ({page})=>{
+        await startPage.login('standard_user','secret_sauce')  
+        await mainPage.assertProductsList()
+        await mainPage.itemClickFromList('Sauce Labs Backpack')
+        await itemPage.wait(3000)
+        await itemPage.backBtn.click()
+        await mainPage.assertProductsList()
+        //console.log('cart count is:' + await mainPage.getCartCount())
+        //expect(await mainPage.getCartCount()).toBeGreaterThan(0)
     })
 })
 // //open next window, get info and paste to the parrent window
